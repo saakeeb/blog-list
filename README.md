@@ -14,10 +14,10 @@ We can edit, or delete the blogs.
 
 ### Github Link
 
-`https://github.com/saakeeb/taglist-type`
+`https://github.com/saakeeb/blog-list`
 
 ### Website link
 
-`https://taglist-type.netlify.app/`
+`https://blog-lists.netlify.app/`
 
 
