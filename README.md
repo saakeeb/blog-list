@@ -6,4 +6,18 @@ Here I have used React, TypeScript, Bootstrap, React-Router, React-Markdown,
 React-Select, and UUID string ID generator NPM package. 
 ```
 
+###  Project:
+
+In this project I have try to apply crud operation in single page web application.
+We can add title, add multiple tag list about topics, and details information of a topics or blog.
+We can edit, or delete the blogs.
+
+### Github Link
+
+`https://github.com/saakeeb/taglist-type`
+
+### Website link
+
+`https://taglist-type.netlify.app/`
+
 
