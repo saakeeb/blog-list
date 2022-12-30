@@ -1,13 +1,6 @@
-import React from 'react';
-import { NoteData, Tag } from '../App';
 import NoteForm from '../NoteForm/NoteForm';
-import { useNote } from '../NoteLayout/NoteLayout';
-
-type EditNoteProps = {
-    onSubmit: (id: string, data: NoteData) => void
-    onAddTag: ( tag: Tag ) => void
-    availableTags: Tag[]
-}
+import { useNote } from '../NoteLayout/useNote';
+import { EditNoteProps } from './EditNoteProps';
 
 const EditNote = ({ onSubmit, onAddTag, availableTags }: EditNoteProps) => {
     const note = useNote();

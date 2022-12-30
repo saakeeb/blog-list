@@ -1,16 +1,10 @@
-import React, { FormEvent, useRef, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { Form, Stack, Row, Col, Button } from 'react-bootstrap';
-import { Prev } from 'react-bootstrap/esm/PageItem';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import CreatableReactSelect from 'react-select/creatable';
-import { NoteData, Tag } from '../App';
-
-type NoteFromProps = {
-    onSubmit: (data: NoteData) => void
-    onAddTag: (tag: Tag) => void
-    availableTags: Tag[]
-} & Partial<NoteData>
+import { Tag } from '../AppProps';
+import { NoteFromProps } from './NoteFromProps';
 
 const NoteForm = ({
     onSubmit,
