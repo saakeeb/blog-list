@@ -2,7 +2,7 @@
 
 ```
 It is a Crud operation based on vite-react project.
-Here I have used React, TypeScript, Bootstrap, React-Router, React-Markdown, 
+Here I have used React, TypeScript, Tailwind CSS, React-Router, React-Markdown, Lazyload component, IntersectionObserver, 
 React-Select, and UUID string ID generator NPM package. 
 ```
 

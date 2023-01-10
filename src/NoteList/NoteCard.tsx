@@ -13,10 +13,10 @@ const NoteCard = ({ id, title, tags }: SimplifiedNote) => {
                 <Link to={`/${id}`}>
                     <figure className="relative w-full transition-all duration-300 cursor-pointer scale-100 hover:scale-110">
                         <LazyLoadImage
-                            alt="My image"
+                            alt={title}
                             height={250}
-                            src={`https://picsum.photos/id/${NumberX}/600/250`}
-                            width={600}
+                            src={`https://picsum.photos/id/${NumberX}/700/250`}
+                            width={700}
                         />
                     </figure>
                     <div className="px-6 py-2">

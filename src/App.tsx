@@ -1,6 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { useMemo } from 'react';
-import { Container } from 'react-bootstrap';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
@@ -18,7 +16,7 @@ function App() {
 
   const notesWithTag = useMemo(() => {
     return notes.map(note => {
-      return {...note, tags: tags.filter(tag=> note.tagIds.includes(tag.id))}
+      return { ...note, tags: tags.filter(tag => note.tagIds.includes(tag.id)) }
     })
   }, [notes, tags]);
 
@@ -26,12 +24,12 @@ function App() {
     setNotes(prevNotes => {
       return [
         ...prevNotes,
-      { ...data, id: uuidv4(), tagIds: tags.map(tag => tag.id) },
+        { ...data, id: uuidv4(), tagIds: tags.map(tag => tag.id) },
       ]
     })
   }
 
-  const onUpdateNote = (id: string, {tags, ...data}: NoteData) => {
+  const onUpdateNote = (id: string, { tags, ...data }: NoteData) => {
     setNotes(prevNotes => {
       return prevNotes.map(note => {
         if (note.id === id) {
@@ -45,7 +43,7 @@ function App() {
 
   const onDeleteNote = (id: string) => {
     setNotes(prevNotes => {
-      return prevNotes.filter(note=> note.id !== id)
+      return prevNotes.filter(note => note.id !== id)
     })
   }
 
@@ -57,7 +55,7 @@ function App() {
     setTags(prevTags => {
       return prevTags.map(tag => {
         if (tag.id === id) {
-          return {...tag, label}
+          return { ...tag, label }
         }
         else {
           return tag;
@@ -73,39 +71,41 @@ function App() {
   }
 
   return (
-    <Container className='mx-auto block my-4'>
-      <Routes>
-        <Route
-          path='/'
-          element={<NoteList
-            availableTags={tags}
-            notes={notesWithTag}
-            onUpdateTag={updateTag}
-            onDeleteTag={deleteTag}
-          />}
-        />
-        <Route
-          path='/new'
-          element={<NewNote
-            onSubmit={onCreateNote}
-            onAddTag={addTag}
-            availableTags={tags}
-          />}
-        />
-        <Route path='/:id' element={<NoteLayout notes={notesWithTag} />}>
-          <Route index element={<Note onDelete={onDeleteNote} />} />
+    <div className='block mx-4'>
+      <div className='w-full xl:max-w-7xl md:max-w-5xl sm:max-w-xl mx-auto block my-4'>
+        <Routes>
           <Route
-            path='edit'
-            element={<EditNote
-              onSubmit={onUpdateNote}
+            path='/'
+            element={<NoteList
+              availableTags={tags}
+              notes={notesWithTag}
+              onUpdateTag={updateTag}
+              onDeleteTag={deleteTag}
+            />}
+          />
+          <Route
+            path='/new'
+            element={<NewNote
+              onSubmit={onCreateNote}
               onAddTag={addTag}
               availableTags={tags}
             />}
           />
-        </Route>
-        <Route path='*' element={<Navigate to="/" />} />
-      </Routes>
-    </Container>
+          <Route path='/:id' element={<NoteLayout notes={notesWithTag} />}>
+            <Route index element={<Note onDelete={onDeleteNote} />} />
+            <Route
+              path='edit'
+              element={<EditNote
+                onSubmit={onUpdateNote}
+                onAddTag={addTag}
+                availableTags={tags}
+              />}
+            />
+          </Route>
+          <Route path='*' element={<Navigate to="/" />} />
+        </Routes>
+      </div>
+    </div>
   )
 }
 
