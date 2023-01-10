@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
+import { Button, Col, Form, Row, Stack } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import ReactSelect from 'react-select';
+import ReactSelect from "react-select";
 import { Tag } from '../AppProps';
 import { NoteListProps } from './NoteListProps';
 import NoteCard from './NoteCard';
@@ -22,83 +23,71 @@ const NoteList = ({ availableTags, notes, onUpdateTag, onDeleteTag }: NoteListPr
 
     return (
         <>
-            <div className="flex mb-4">
-                <div className="mr-auto">
-                    <h1 className='text-2xl'>Notes</h1>
-                </div>
-                <div className="flex">
-                    <Link to={"/new"}>
-                        <button className="bg-blue-500 border-2 border-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded shadow">Create</button>
-                    </Link>
-                    <button
-                        className=" bg-gray-100 hover:bg-gray-500 hover:text-gray-50 text-gray-500 ml-2 py-2 px-4 border-2 border-gray-500 rounded shadow"
-                        onClick={() => setEditTagsModal(true)}
-                    >
-                        Edit Tags
-                    </button>
-                </div>
-            </div>
-            <form>
-                <div className="grid gap-6 mb-6 md:grid-cols-2">
-                    <div>
-                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                        <input
-                            type="text"
-                            id="title" 
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 
-                            dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Search Title"
-                            // required
-                            value={title}
-                            onChange={e => setTitle(e.target.value)}
-                        />
-                    </div>
-                    <div>
-                        <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tags</label>
-                        <ReactSelect
-                            isMulti
-                            placeholder="Search Tags"
-                            value={selectedTags.map(tag => {
-                                return { label: tag.label, value: tag.id }
-                            })}
-                            options={availableTags.map(tag => {
-                                return { label: tag.label, value: tag.id }
-                            })}
-                            onChange={tags => {
-                                setSelectedTags(tags.map(tag => {
-                                    return { label: tag.label, id: tag.value }
-                                }))
-                            }}
-                            theme={(theme) => ({
-                                ...theme,
-                                borderRadius: 6,
-                                colors: {
-                                    ...theme.colors,
-                                    primary25: 'rgba(59, 130, 246, 0.7)',
-                                    primary: 'black',
-                                },
-                            })}
-                        />
-                    </div>
-                </div>
-            </form>
-            <div className="grid w-full block md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-8">
+            <Row className='align-items-center mb-4'>
+                <Col>
+                    <h1>Notes</h1>
+                </Col>
+                <Col xs="auto">
+                    <Stack gap={2} direction="horizontal">
+                        <Link to={"/new"}>
+                            <Button variant='primary'>Create</Button>
+                        </Link>
+                        <Button
+                            variant='outline-secondary'
+                            onClick={() => setEditTagsModal(true)}
+                        >Edit Tags</Button>
+                    </Stack>
+                </Col>
+            </Row>
+            <Form>
+                <Row>
+                    <Col className='mb-4'>
+                        <Form.Group controlId='title'>
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control
+                                type='text'
+                                value={title}
+                                onChange={e => setTitle(e.target.value)}
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group controlId="tags">
+                            <Form.Label>Tags</Form.Label>
+                            <ReactSelect
+                                isMulti
+                                value={selectedTags.map(tag => {
+                                    return { label: tag.label, value: tag.id }
+                                })}
+                                options={availableTags.map(tag => {
+                                    return { label: tag.label, value: tag.id }
+                                })}
+                                onChange={tags => {
+                                    setSelectedTags(tags.map(tag => {
+                                        return { label: tag.label, id: tag.value }
+                                    }))
+                                }}
+                            />
+                        </Form.Group>
+                    </Col>
+                </Row>
+            </Form>
+            <Row xs={1} sm={2} lg={3} xl={4} className="g-3">
                 {
                     filterNotes.map(note => (
-                        <div className="w-full" key={note.id}>
+                        <Col key={note.id}>
                             <NoteCard
                                 id={note.id}
                                 title={note.title}
                                 tags={note.tags}
                             />
-                        </div>
+                        </Col>
                     ))
-                    
                 }
-            </div>
+            </Row>
             <EditTagsModal
                 show={editTagsModal}
-                handleClose={() => setEditTagsModal(false)}
+                handleClose={()=> setEditTagsModal(false)}
                 availableTags={availableTags}
                 onUpdateTag={onUpdateTag}
                 onDeleteTag={onDeleteTag}

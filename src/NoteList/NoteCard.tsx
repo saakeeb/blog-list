@@ -1,47 +1,34 @@
+import { Badge, Card, Stack } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { SimplifiedNote } from './NoteListProps';
 import styles from "../NoteList.module.css";
-import LazyLoadImage from '../LazyLoadImage/LazyLoadImage';
 
 const NoteCard = ({ id, title, tags }: SimplifiedNote) => {
-    let NumberX = Math.floor((Math.random() * 300) + 1);
     return (
-        <>
-            <div
-                className={`w-full block overflow-hidden bg-white border border-gray-600 rounded shadow ${styles.card}`}
-            >
-                <Link to={`/${id}`}>
-                    <figure className="relative w-full transition-all duration-300 cursor-pointer scale-100 hover:scale-110">
-                        <LazyLoadImage
-                            alt="My image"
-                            height={250}
-                            src={`https://picsum.photos/id/${NumberX}/600/250`}
-                            width={600}
-                        />
-                    </figure>
-                    <div className="px-6 py-2">
-                        <div className="font-bold text-xl mb-2">{title}</div>
-                    </div>
+        <Card as={Link} to={`/${id}`} className={`h-100 text-reset text-decoration-none ${styles.card}`} >
+            <Card.Body>
+                <Stack gap={2} className="align-items-center justify-content-center h-100">
+                    <span className='fs-5'>{title}</span>
                     {
                         tags.length > 0 && (
-                            <div className="px-6 pt-2 pb-4">
+                            <Stack
+                                gap={1}
+                                direction="horizontal"
+                                className='justify-content-center flex-wrap'
+                            >
                                 {
                                     tags.map(tag => (
-                                        <span
-                                            key={tag.id}
-                                            className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-                                        >
+                                        <Badge className='text-truncate' key={tag.id}>
                                             {tag.label}
-                                        </span>
+                                        </Badge>
                                     ))
                                 }
-                            </div>
+                            </Stack>
                         )
                     }
-
-                </Link>
-            </div>
-        </>
+                </Stack>
+            </Card.Body>
+        </Card>
     )
 };
 

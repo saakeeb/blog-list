@@ -73,7 +73,7 @@ function App() {
   }
 
   return (
-    <Container className='mx-auto block my-4'>
+    <Container className='m-4 d-block mx-auto'>
       <Routes>
         <Route
           path='/'

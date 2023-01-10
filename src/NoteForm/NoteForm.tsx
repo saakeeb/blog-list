@@ -82,9 +82,9 @@ const NoteForm = ({
                     />
                 </Form.Group>
                 <Stack direction="horizontal" gap={2} className="justify-content-end">
-                    <button type='submit' className="bg-blue-500 hover:bg-blue-700 border-2 border-blue-500 text-white py-2 px-4 rounded shadow">Save</button>
+                    <Button type='submit' variant='primary'>Save</Button>
                     <Link to="..">
-                        <button type='button' className="bg-gray-100 hover:bg-gray-500 hover:text-gray-50 text-gray-500 ml-2 py-2 px-4 border-2 border-gray-500 rounded shadow">Cancel</button>
+                        <Button type='button' variant='outline-secondary'>Cancel</Button>
                     </Link>
                 </Stack>
             </Stack>
