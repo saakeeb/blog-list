@@ -31,7 +31,7 @@ const Note = ({ onDelete }: NoteFromProps) => {
                 <div className='flex justify-center flex-col m-8'>
                     <h1 className='block text-center text-2xl mb-3'>{note.title}</h1>
                     {note.tags.length > 0 && (
-                        <div className='flex justify-center'>
+                        <div className='px-6 pt-2 pb-4 block mx-auto'>
                             {
                                 note.tags.map(tag => (
                                     <span

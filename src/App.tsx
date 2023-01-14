@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
@@ -9,10 +9,21 @@ import Note from './Note/Note';
 import NoteLayout from './NoteLayout/NoteLayout';
 import NoteList from './NoteList/NoteList';
 import { NoteData, RawNote, Tag } from './AppProps';
+import { blogDatas } from './Services/BlogData';
 
 function App() {
   const [notes, setNotes] = useLocalStorage<RawNote[]>("NOTES", []);
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
+  const blogData = useMemo(() => blogDatas(), []);
+
+  useEffect(() => {
+    if (tags.length === 0) {
+      const newTags = blogData[0].tags.map(label => ({ id: uuidv4(), label }));
+      setTags([...tags, ...newTags]);
+      const newNote = { id: uuidv4(), tagIds: newTags.map(tag => tag.id), textArea: blogData[0].textArea, title: blogData[0].title };
+      setNotes([...notes, newNote]);
+    }
+  }, [blogData, tags]);
 
   const notesWithTag = useMemo(() => {
     return notes.map(note => {

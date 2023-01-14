@@ -16,9 +16,9 @@ const EditTagsModal = ({
                         className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                     >
                         <div className="relative w-full h-full max-w-md md:h-auto">
-                            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                <div className="p-4 pb-3 border-b rounded-t dark:border-gray-600">
-                                    <h3 className="text-xl block font-semibold text-gray-900 dark:text-white">
+                            <div className="relative bg-white rounded-lg shadow">
+                                <div className="p-4 pb-3 border-b rounded">
+                                    <h3 className="text-xl block font-semibold text-gray-900">
                                         Edit Tags
                                     </h3>
                                     <p className=" mt-1 text-sm block text-gray-400">Edit the tags if necessary...</p>
@@ -38,7 +38,6 @@ const EditTagsModal = ({
                                             availableTags.map(tag => (
                                                 <div className="relative text-gray-600 focus-within:text-gray-400" key={tag.id}>
                                                     <input
-                                                        // shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                                                         className="w-full py-2 text-sm shadow appearance-none border rounded-md px-3 focus:outline-none focus:shadow-outline focus:text-gray-900 mb-2"
                                                         type='text'
                                                         value={tag.label}

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { SimplifiedNote } from './NoteListProps';
-import styles from "../NoteList.module.css";
+// import styles from "../NoteList.module.css";
 import LazyLoadImage from '../LazyLoadImage/LazyLoadImage';
 
 const NoteCard = ({ id, title, tags }: SimplifiedNote) => {
@@ -8,7 +8,7 @@ const NoteCard = ({ id, title, tags }: SimplifiedNote) => {
     return (
         <>
             <div
-                className={`w-full block overflow-hidden bg-white border border-gray-600 rounded shadow ${styles.card}`}
+                className="w-full block overflow-hidden bg-white border border-gray-300 rounded transition ease-in-out duration-100 hover:-translate-y-1.5 hover:shadow-xl"
             >
                 <Link to={`/${id}`}>
                     <figure className="relative w-full transition-all duration-300 cursor-pointer scale-100 hover:scale-110">
