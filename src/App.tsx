@@ -1,7 +1,8 @@
-import { useEffect, useMemo } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
+import ReactGA from 'react-ga';
 import { useLocalStorage } from './Hooks/useLocalStorage';
 import EditNote from './EditNote/EditNote';
 import NewNote from './NewNote/NewNote';
@@ -10,20 +11,47 @@ import NoteLayout from './NoteLayout/NoteLayout';
 import NoteList from './NoteList/NoteList';
 import { NoteData, RawNote, Tag } from './AppProps';
 import { blogDatas } from './Services/BlogData';
+import useGATiming from './React-GA/useGATiming';
+import { TRACKING_ID } from './React-GA/React-GA';
+import useAnalyticsEventTracker from './React-GA/useAnalyticsEventTracker';
 
 function App() {
   const [notes, setNotes] = useLocalStorage<RawNote[]>("NOTES", []);
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
   const blogData = useMemo(() => blogDatas(), []);
+  const location = useLocation();
+  const [initialized, setInitialized] = useState<boolean>(false);
+  const GATiming = useGATiming("App Loading Time");
+  const gaEventTracker = useAnalyticsEventTracker('Note Created');
 
   useEffect(() => {
-    if (tags.length === 0) {
-      const newTags = blogData[0].tags.map(label => ({ id: uuidv4(), label }));
-      setTags([...tags, ...newTags]);
-      const newNote = { id: uuidv4(), tagIds: newTags.map(tag => tag.id), textArea: blogData[0].textArea, title: blogData[0].title };
-      setNotes([...notes, newNote]);
-    }
-  }, [blogData, tags]);
+    ReactGA.initialize(TRACKING_ID);
+    ReactGA.pageview(window.location.pathname + window.location.search);
+    const time = Date.now();
+    GATiming('App Action', time);
+  }, [initialized, location, GATiming]);
+
+  // useEffect(() => {
+  //   if (tags.length === 0) {
+  //     blogData.map((blog) => {
+  //       const newTags = blog.tags.map(label => ({ id: uuidv4(), label }));
+  //       setTags([...tags, ...newTags]);
+  //       const newNote = { id: uuidv4(), tagIds: newTags.map(tag => tag.id), textArea: blog.textArea, title: blog.title };
+  //       setNotes([...notes, newNote]);
+  //     });
+  //   }
+  // }, [blogData, tags]);
+
+  useEffect(() => {
+    const newTags = [...new Set(blogData.flatMap(blog => blog.tags))].map(label => ({ id: uuidv4(), label }));
+    setTags(newTags);
+    const newNotes = blogData.map(blog => {
+      const noteTags = blog.tags.map(tag => newTags.find(newTag => newTag.label === tag) || { id: uuidv4() , label: tag});
+      return { id: uuidv4(), tagIds: noteTags.map(tag => tag.id), textArea: blog.textArea, title: blog.title };
+    });
+    setNotes(newNotes);
+  }, [blogData]);
+
 
   const notesWithTag = useMemo(() => {
     return notes.map(note => {
@@ -37,7 +65,8 @@ function App() {
         ...prevNotes,
         { ...data, id: uuidv4(), tagIds: tags.map(tag => tag.id) },
       ]
-    })
+    });
+    gaEventTracker('Create Button Click', 'Note Created');
   }
 
   const onUpdateNote = (id: string, { tags, ...data }: NoteData) => {
@@ -50,16 +79,19 @@ function App() {
         }
       })
     })
+    gaEventTracker('Update Button Click', 'Note Updated');
   }
 
   const onDeleteNote = (id: string) => {
     setNotes(prevNotes => {
       return prevNotes.filter(note => note.id !== id)
     })
+    gaEventTracker('Delete Button Click', 'Note Deleted');
   }
 
   const addTag = (tag: Tag) => {
     setTags(prev => [...prev, tag])
+    gaEventTracker('Create Tag Click', 'Tag Created');
   }
 
   const updateTag = (id: string, label: string) => {
@@ -73,12 +105,14 @@ function App() {
         }
       })
     })
+    gaEventTracker('Update Tag Click', 'Tag Updated');
   }
 
   const deleteTag = (id: string) => {
     setTags(prevTags => {
       return prevTags.filter(tag => tag.id !== id)
     })
+    gaEventTracker('Delete Tag Click', 'Tag Deleted');
   }
 
   return (
