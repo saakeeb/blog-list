@@ -22,7 +22,7 @@ function App() {
   const location = useLocation();
   const [initialized, setInitialized] = useState<boolean>(false);
   const GATiming = useGATiming("App Loading Time");
-  const gaEventTracker = useAnalyticsEventTracker('Note Created');
+  const gaEventTracker = useAnalyticsEventTracker('Note Event');
 
   useEffect(() => {
     ReactGA.initialize(TRACKING_ID);
