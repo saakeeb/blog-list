@@ -31,26 +31,26 @@ function App() {
     GATiming('App Action', time);
   }, [initialized, location, GATiming]);
 
-  // useEffect(() => {
-  //   if (tags.length === 0) {
-  //     blogData.map((blog) => {
-  //       const newTags = blog.tags.map(label => ({ id: uuidv4(), label }));
-  //       setTags([...tags, ...newTags]);
-  //       const newNote = { id: uuidv4(), tagIds: newTags.map(tag => tag.id), textArea: blog.textArea, title: blog.title };
-  //       setNotes([...notes, newNote]);
-  //     });
-  //   }
-  // }, [blogData, tags]);
-
   useEffect(() => {
-    const newTags = [...new Set(blogData.flatMap(blog => blog.tags))].map(label => ({ id: uuidv4(), label }));
-    setTags(newTags);
-    const newNotes = blogData.map(blog => {
-      const noteTags = blog.tags.map(tag => newTags.find(newTag => newTag.label === tag) || { id: uuidv4() , label: tag});
-      return { id: uuidv4(), tagIds: noteTags.map(tag => tag.id), textArea: blog.textArea, title: blog.title };
-    });
-    setNotes(newNotes);
-  }, [blogData]);
+    if (tags.length === 0) {
+      blogData.map((blog) => {
+        const newTags = blog.tags.map(label => ({ id: uuidv4(), label }));
+        setTags([...tags, ...newTags]);
+        const newNote = { id: uuidv4(), tagIds: newTags.map(tag => tag.id), textArea: blog.textArea, title: blog.title };
+        setNotes([...notes, newNote]);
+      });
+    }
+  }, [blogData, tags]);
+
+  // useEffect(() => {
+  //   const newTags = [...new Set(blogData.flatMap(blog => blog.tags))].map(label => ({ id: uuidv4(), label }));
+  //   setTags(newTags);
+  //   const newNotes = blogData.map(blog => {
+  //     const noteTags = blog.tags.map(tag => newTags.find(newTag => newTag.label === tag) || { id: uuidv4() , label: tag});
+  //     return { id: uuidv4(), tagIds: noteTags.map(tag => tag.id), textArea: blog.textArea, title: blog.title };
+  //   });
+  //   setNotes(newNotes);
+  // }, [blogData]);
 
 
   const notesWithTag = useMemo(() => {

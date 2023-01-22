@@ -12,12 +12,11 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BRCEWCX0V0"></script>
     <script>
-      import { TRACKING_ID } from './src/React-GA/React-GA.tsx';
-
+      // import { TRACKING_ID } from './src/React-GA/React-GA.tsx';
+      const TRACKING_ID = require('./src/React-GA/React-GA.tsx');
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
-
       gtag('config', TRACKING_ID);
     </script>
     <script type="module" src="/src/main.tsx"></script>
