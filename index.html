@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog Lists</title>
-  </head>
-  <body>
-    <div id="root"></div>
 
-    <!-- Google tag (gtag.js) -->
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-BRCEWCX0V0"></script>
-    <script>
-      // import { TRACKING_ID } from './src/React-GA/React-GA.tsx';
-      const TRACKING_ID = require('./src/React-GA/React-GA.tsx');
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('js', new Date());
-      gtag('config', TRACKING_ID);
-    </script> -->
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id='%REACT_APP_GTM_ID%'"></script>
+  <script>
+    // import { TRACKING_ID } from './src/React-GA/React-GA.tsx';
+    // const TRACKING_ID = require('./src/React-GA/React-GA.tsx');
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', '%REACT_APP_GTM_ID%');
+  </script>
+  <title>Blog Lists</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
