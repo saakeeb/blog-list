@@ -68,7 +68,7 @@ function App() {
         { ...data, id: uuidv4(), tagIds: tags.map(tag => tag.id) },
       ]
     });
-    gaEventTracker('Create Button Click', 'Note Created');
+    gaEventTracker('Create Note Click', 'Note Created');
   }
 
   const onUpdateNote = (id: string, { tags, ...data }: NoteData) => {
@@ -81,14 +81,14 @@ function App() {
         }
       })
     })
-    gaEventTracker('Update Button Click', 'Note Updated');
+    gaEventTracker('Update Note Click', 'Note Updated');
   }
 
   const onDeleteNote = (id: string) => {
     setNotes(prevNotes => {
       return prevNotes.filter(note => note.id !== id)
     })
-    gaEventTracker('Delete Button Click', 'Note Deleted');
+    gaEventTracker('Delete Note Click', 'Note Deleted');
   }
 
   const addTag = (tag: Tag) => {
